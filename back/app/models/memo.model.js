@@ -1,6 +1,6 @@
 module.exports =(sequelize,Sequelize)=>{
-    const Creation = sequelize.define("creations",{
-        id_creation:{
+    const Memo = sequelize.define("memo",{
+        id_memo:{
             type: Sequelize.INTEGER,
             allowNull: false,
             primaryKey : true,
@@ -12,20 +12,15 @@ module.exports =(sequelize,Sequelize)=>{
             allowNull: false,
 
         },
-        prix:{
-            type: Sequelize.INTEGER,
-            allowNull: false,
-
-        },
         description:{
             type: Sequelize.STRING,
             allowNull: false,
 
         },
-        likes:{
+        id_categorie:{
             type: Sequelize.INTEGER,
-            defaultValue : 0
+            allowNull: false,
         },
     });
-    return Creation
+    return Memo
 }

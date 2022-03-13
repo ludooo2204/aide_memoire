@@ -4,6 +4,6 @@ module.exports= {
       HOST: "localhost",
       USER: "root",
       PASSWORD: "",
-      DB: "christelebdd",
+      DB: "aide_memoire",
       dialect:"mysql"
   };

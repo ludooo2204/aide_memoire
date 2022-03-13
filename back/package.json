@@ -11,8 +11,9 @@
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",
+    "nodemailer": "^6.7.2",
     "rand-token": "^1.0.1",
-    "sequelize": "^6.16.1",
+    "sequelize": "^6.16.1"
   },
   "proxy": "http://localhost:7000/",
   "scripts": {
