@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #tt{
+            margin: 50px;
+            width: 20px;
+            height: 20px;
+            background-color: cadetblue;
+            rotate:(40deg);
+            transition: all 1s ease-in-out;
+        }
+        #tt:hover{
+            transform: translateX(100px) scale(2) ;
+            background-color: rgb(13, 45, 46);
+
+            /* transform: ; */
+
+        }
+    </style>
+</head>
+<body>
+    <h1></h1>
+    <div id="tt"></div>
+    <label>rotation</label>    <input type="number" id="pp"></div> <button  id="button">go !</button><br>
+    <label>scale</label>    <input type="number" id="pp2"></div> <button  id="button2">go !</button>
+
+   
+        <h1> debug </h1>
+        <h2 id="debug"></h2>
+    <script>
+        let rotationValue= document.getElementById("pp")
+        let scaleValue= document.getElementById("pp2")
+        let debug=document.getElementById("debug")
+        document.getElementById("button").addEventListener("click",()=>{
+            document.getElementById("tt").style.transform=`rotate(${rotationValue.value}deg)`;
+            debug.innerHTML=rotationValue.value;
+
+})
+        document.getElementById("button2").addEventListener("click",()=>{
+            document.getElementById("tt").style.transform=`scale(${scaleValue.value})`;
+            debug.innerHTML=scaleValue.value;
+
+})
+
+
+// tt.style.transform("rotate :(40deg)")
+
+
+    </script>
+</body>
+</html>

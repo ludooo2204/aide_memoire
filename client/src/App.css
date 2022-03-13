@@ -1,0 +1,327 @@
+body{
+  margin: 0;
+  background-color: #EFF6EE;
+}
+.App{
+  /* height: 100vh; */
+  min-height: 100vh;
+  background-color: #f1f0ed;
+}
+.header{
+  height: 100vh;
+display: flex; 
+flex-direction: column; 
+justify-content: center;
+align-items: center;
+padding-top: 1rem;
+padding-bottom: 1%;
+  /* background-color : #f8f8f8; */
+  background-image: url("/src/notes-david-travis.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin :auto 1px;
+width: 100%;
+  /* /////// */
+  position: fixed;
+  z-index: 1;
+  /* padding-top: 50px; */
+  transition: all 1s;
+}
+@font-face {
+  font-family: 'Fuggles';
+  src: url("./fonts/Fuggles-Regular.ttf");
+}
+.headerH1{
+  font-family: 'Fuggles', cursive;
+  /* font-family: ', cursive; */
+  text-shadow: #A5A5A5 5px 5px;
+  font-size: 15rem!important;
+  font-weight: 600!important;
+  transform: scale(0);
+  /* transition: all 1s; */
+  animation: poppupTitle 1.5s forwards ease-in-out , floatingTitle alternate ease-in-out 2s infinite 1.5s;
+  /* animation: floatingTitle alternate 4.5s infinite; */
+  /* floatingTitle alternate 4.5s infinite  ; */
+ 
+  
+}
+@keyframes poppupTitle {
+  0%{
+    opacity: 0;
+    transform: scale(0);
+  }
+ 
+  100%{
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+}
+@keyframes floatingTitle {
+  0%{
+    transform: translateY(-.2rem);
+    transform: translateX(-.2rem);
+    transform:skewX(2deg);
+    text-shadow: #cacaca 5px 5px 4px;
+    
+  }
+ 
+  100%{
+    transform: translateY(.2rem);
+    transform: translateX(.2rem);
+    text-shadow: #bbb9b9 -5px 5px ;
+  }
+  
+}
+.header2{
+  height: 15vh;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  padding-bottom: 1%;
+  background-image: url("/src/notes-david-travis.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position:0 -680px;
+  /* transform: translateY(-100%); */
+width: 100%;
+/* /////// */
+position: fixed;
+z-index: 1;
+transition: all 1s;
+}
+.header2 img{
+  transform: translateY(100%);
+}
+.animatedHeader{
+  /* font-size:1rem!important; */
+  font-family: 'Fuggles', cursive;
+  font-size: 5rem!important;
+  font-weight: 500!important;
+  
+  transition: font-size 1s;
+  /* transition: font-size 1s, transform 0.4s ease-in-out 0.1s; */
+}
+
+
+.floatting{
+  /* position: relative; */
+ animation: flotte 1.5s infinite ease-in-out alternate;
+}
+@keyframes flotte {
+  from {
+    box-shadow: -10px -10px 50px #A5A5A5;
+    /* transform: scale(1); */
+  } to {
+    box-shadow: 10px 10px 50px #A5A5A5;
+    /* transform: scale(1.005); */
+  }
+}
+.card-container{
+  height: 300px;
+  width: 300px;
+  box-shadow: 0px 3px 50px #A5A5A5;
+}
+
+.card-wrapper{
+  width: 100%; 
+  height: 100%; 
+  margin-top: 20px;
+  margin-right: 5%;
+  margin-left: 5%;
+  box-shadow: 0px 3px 50px #A5A5A5;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  background-color: aliceblue;
+  /* padding: 1; */
+}
+
+.card-top{
+  width: 100%;
+  height: 2%;
+}
+.card-description{
+  margin: 10px;
+}
+.task-holder{
+  width: 100%;
+  height: 98%;
+  padding: 10px 10px;
+  display : flex;
+  flex-direction: column;
+  position: relative;
+}
+.headerCard{
+  /* background-color: bisque; */
+  display: flex;
+justify-content: space-between;
+}
+.card-header{
+  font-family: 'roboto', cursive;
+
+  margin-top: 10px;
+  margin-bottom: 10px;
+  /* max-width: 20%; */
+  min-width: 20%;
+  font-weight: 900!important;
+  font-size:1rem;
+  height: 2rem;
+  padding: 1px 1px !important;
+  text-align: center;
+}
+.card-header-right{
+  /* position: relative;
+  left:-1%;
+  font-size: 1.2rem;
+  font-family:fantasy;
+  /* border: 2px   solid; */
+  /* color: rgb(58, 56, 56); */
+  /* margin-top: 10px; */
+  /* margin-bottom: 10px; */
+  /* min-width: 5%; */
+  /* height: 30px; */
+  /* padding: 1px 1px !important; */
+  /* margin-right: 10px; */
+  /* text-align: center; */ 
+
+
+position: relative;
+/* right : -7em; */
+  font-size: 1.2rem;
+    font-family: fantasy;
+    /* border: 2px solid; */
+    color: rgb(58, 56, 56);
+    /* margin-top: 10px; */
+    /* margin-bottom: 10px; */
+    /* min-width: 5%; */
+    /* height: 30px; */
+    /* padding: 1px 1px !important; */
+    /* margin-right: 1rem; */
+    text-align: center;
+    cursor: pointer;
+}
+.icon-delete-modify{
+  position: absolute;
+  right: 30px;
+  bottom: 20px;
+}
+.task-container{
+  width: 100%;
+/* height: 100vh; */
+position: relative;
+top:28vh;
+display: flex;
+  
+  flex-wrap: wrap;
+  /* background-color: #43c033; */
+}
+.button-container{
+  display: flex;
+  padding: 1rem;
+  justify-content: space-between;
+  /* background-color: #EFF6EE; */
+}
+.button{
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  align-self: flex-end;
+  /* background-color: #3f3126; */
+  /* padding: 0.5em; */
+  color: #bd8c67;
+  
+  /* border-radius: 13px; */
+  /* font-size: 2rem; */
+  /* border: 1px black solid; */
+
+}
+
+code{
+  width: 60%;
+
+}
+code, pre {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',    monospace!important;
+    background-color: rgb(77, 35, 90)!important;
+    /* font-size: 20px!important; */
+    color: greenyellow!important ;
+    border-radius: 3px;
+    display: block;
+    padding: 0.5em;
+    margin: 0.5em;
+    overflow: visible;
+}
+
+.modal-content{
+  width: 1000px!important;
+
+}
+.modal-dialog {
+  max-width: 1000px!important;
+  margin: 50px auto!important;
+}
+
+/* Tooltip container */
+.tooltip1 {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  cursor: pointer;
+  /* display: inline-block; */
+  /* border-bottom: 1px dotted black; */
+   /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip1 .tooltiptext1 {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: fixed;
+  bottom: 4rem;
+  right: 4rem;
+  z-index: 1;
+  opacity: 0.1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip1:hover .tooltiptext1 {
+  visibility: visible;
+  transition: all .3s;
+  opacity: 0.8;
+}
+
+
+/* Tooltip text */
+ .tooltiptext2 {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: relative;
+  bottom: 2rem;
+  padding: 0.5rem ;
+  /* right: 0rem; */
+  z-index: 1;
+  opacity: 0.1;
+}
+
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip2:hover .tooltiptext2 {
+  visibility: visible;
+  transition: all .3s;
+  opacity: 0.8;
+}
