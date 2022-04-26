@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import EditTask from "../modals/EditTask";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditIcon from "@mui/icons-material/Edit";
 
 const Card = ({ taskObj, index, deleteTask, updateListArray, filtreCategorie }) => {
 	const [modal, setModal] = useState(false);
@@ -33,12 +35,17 @@ const Card = ({ taskObj, index, deleteTask, updateListArray, filtreCategorie }) 
 
 	const updateTask = (objToUpdate) => {
 		console.log("taskObj from update");
+		console.log("taskObj from update");
+		console.log("taskObj from update");
+		console.log("taskObj from update");
+		console.log("taskObj from update");
 		console.log(objToUpdate);
 		updateListArray(objToUpdate, taskObj.id);
 	};
 
 	const handleDelete = () => {
 		console.log(taskObj);
+		console.log("deletre!!");
 		deleteTask(taskObj.id);
 	};
 
@@ -46,7 +53,6 @@ const Card = ({ taskObj, index, deleteTask, updateListArray, filtreCategorie }) 
 	// 	console.log( index)
 
 	// }
-
 	const onscroll = (e) => {
 		console.log(e);
 	};
@@ -59,7 +65,7 @@ const Card = ({ taskObj, index, deleteTask, updateListArray, filtreCategorie }) 
 						{taskObj.nom}
 					</span>
 					<div className="tooltip2">
-                        <span className="tooltiptext2">Clique pour filtrer par catégorie</span>
+						<span className="tooltiptext2">Clique pour filtrer par catégorie</span>
 						<span
 							className="card-header-right "
 							onClick={() => filtreCategorie(index)}
@@ -79,15 +85,23 @@ const Card = ({ taskObj, index, deleteTask, updateListArray, filtreCategorie }) 
 				<p className="mt-3 card-description" dangerouslySetInnerHTML={{ __html: taskObj.description }}></p>
 
 				<div className="icon-delete-modify">
-					<i
+				
+
+					{/* <i
 						className="far fa-edit mr-3"
 						style={{ color: colors[index % 5].primaryColor, cursor: "pointer" }}
 						onClick={() => {
 							setModal(true);
 							console.log("coucou");
 						}}
-					></i>
-					<i className="fas fa-trash-alt" style={{ color: colors[index % 5].primaryColor, cursor: "pointer" }} onClick={handleDelete}></i>
+					></i> */}
+					<EditIcon
+						onClick={() => {
+							setModal(true);
+						}}
+					/>
+					<DeleteForeverIcon onClick={handleDelete} />
+					{/* <i className="fas fa-trash-alt" style={{ color: colors[index % 5].primaryColor, cursor: "pointer" }} onClick={handleDelete}></i>   */}
 				</div>
 			</div>
 			<EditTask modal={modal} toggle={toggle} updateTask={updateTask} taskObj={taskObj} />

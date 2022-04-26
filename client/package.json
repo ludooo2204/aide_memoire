@@ -16,7 +16,8 @@
     "reactstrap": "^8.8.0",
     "web-vitals": "^0.2.4"
   },
-  "homepage": "http://www.lomano.go.yo.fr/aideMemoire",
+  "proxy": "http://localhost:7000/",
+
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

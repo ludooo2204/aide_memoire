@@ -1,10 +1,6 @@
 const { authJwt } = require("../middleware");
 const controller = require("../controllers/user.controller");
-let creations_route = require("./creation.routes");
-let sendMail_route = require("./sendMail.routes");
-let forgotPassword = require("./forgotPassword.routes");
-let forgotLogin = require("./forgotLogin.routes");
-let resetPassword = require("./resetPassword.routes");
+// let creations_route = require("./creation.routes");
 let signinAuto_route = require("./signinAuto.routes");
 
 module.exports = function (app) {
@@ -14,16 +10,16 @@ module.exports = function (app) {
 	});
 
 	// partie visiteur
-	app.use("/api/creations",  creations_route);
-	app.use("/api/sendmail", sendMail_route);
-	app.use("/api/forgot-password", forgotPassword);
-	app.use("/api/forgot-login", forgotLogin);
-	app.use("/api/reset-password", resetPassword);
+	// app.use("/api/creations", creations_route);
 
 	// partie utilisateur connecté
-	app.use("/api/signinAuto", [authJwt.verifyToken, authJwt.isAdmin], signinAuto_route);
+	app.use("/memo/auth/signinAuto", [authJwt.verifyToken], signinAuto_route);
 
-	// partie Admin
-	// app.use("/api/admin/tags", [authJwt.verifyToken, authJwt.isAdmin], tag_route);
-	app.get("/api/admin", [authJwt.verifyToken, authJwt.isAdmin], controller.adminBoard);
+	// const controller = require("../controllers/creation.controller");
+
+	app.get("/memo/getMemo/:id", controller.getMemo);
+	app.delete("/memo/deleteMemo/:id", controller.deleteMemo);
+	app.post("/memo/postMemo", controller.postMemo);
+	app.patch("/memo/updateMemo/:id", controller.updateMemo);
+	
 };

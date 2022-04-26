@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-const CreateTaskPopup = ({ modal, toggle, save }) => {
+const CreationMemo = ({ modal, toggle, save }) => {
 	const [taskName, setTaskName] = useState("");
 	const [description, setDescription] = useState("");
 	const [categorie, setCategorie] = useState("");
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
-console.log( name, value)
+		console.log(name, value);
 		if (name === "taskName") {
 			setTaskName(value);
 		} else if (name === "description") {
@@ -32,12 +32,12 @@ console.log( name, value)
 			<ModalHeader toggle={toggle}>Creer Mémo</ModalHeader>
 			<ModalBody>
 				<div className="form-group">
-					<label>titre du mémo</label>
+					<label>Titre du mémo</label>
 					<input type="text" className="form-control" value={taskName} onChange={handleChange} name="taskName" />
 				</div>
 				<div className="form-group">
 					<label>Description</label>
-					<textarea rows="5"   className="form-control" value={description} onChange={handleChange} name="description"></textarea>
+					<textarea rows="5" className="form-control" value={description} onChange={handleChange} name="description"></textarea>
 				</div>
 				<div className="form-group">
 					<label>Categorie</label>
@@ -47,7 +47,7 @@ console.log( name, value)
 			<ModalFooter>
 				<Button color="primary" onClick={handleSave}>
 					Créer
-				</Button>{" "}
+				</Button>
 				<Button color="secondary" onClick={toggle}>
 					Annuler
 				</Button>
@@ -56,4 +56,4 @@ console.log( name, value)
 	);
 };
 
-export default CreateTaskPopup;
+export default CreationMemo;

@@ -1,32 +1,71 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import CreateTask from "../modals/CreateTask";
+import CreationMemo from "../modals/CreationMemo";
+import LoginForm from "./LoginForm";
 import Card from "./Card";
-import Iframe from "react-iframe";
-import { Button } from "reactstrap";
-// import img from '../notes-david-travis.jpg'
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
+import Modal from "react-modal";
 
+Modal.setAppElement("body");
+
+const customStyles = {
+	content: {
+		zIndex: "5",
+		top: "50%",
+		left: "50%",
+		width: "50VW",
+		height: "80VH",
+		right: "auto",
+		bottom: "auto",
+		marginRight: "-50%",
+		transform: "translate(-50%, -50%)",
+		backgroundColor: "#f1f1f120",
+		display: "flex",
+		justifyContent: "center",
+		padding: "0.5REM",
+		boxShadow: "3px 3px 30px 2px",
+		borderRadius: "6px",
+	},
+};
 const TodoList = () => {
 	const [modal, setModal] = useState(false);
-	const [iFrameWindow, setIFrameWindow] = useState(false);
 	const [headerH1Class, SetHeaderH1Class] = useState("headerH1");
 	const [headerClass, SetHeaderClass] = useState("header");
+	const [modalIsOpen, setIsOpen] = useState(false);
+	const [userConnected, setUserConnected] = useState(null);
+	const [toggleMenu, setToggleMenu] = useState(false);
+	const [userData, setUserData] = useState(null);
+
 	const [taskList, setTaskList] = useState([]);
 	const [taskListTotale, setTaskListTotale] = useState([]);
 	const [isfiltreCategorie, setFiltreCategorie] = useState(false);
-	useEffect(() => {
-		// let arr = localStorage.getItem("taskList")
-		axios.post("https://lomano.go.yo.fr/api/aideMemoire/get.php", "").then((e) => {
-			console.log(e.data);
-			setTaskList(e.data);
-			setTaskListTotale(e.data);
-		});
 
-		// if (arr) {
-		//     let obj = JSON.parse(arr)
-		//     setTaskList(obj)
-		// }
+	useEffect(() => {
+		const header = {
+			headers: {
+				"x-access-Token": window.localStorage.getItem("token"),
+				"content-type": "application/json",
+			},
+		};
+		axios
+			.get("/memo/auth/signinAuto", header)
+			.then((user) => {
+				setUserData(user.data);
+				setUserConnected(true);
+
+				axios
+					.get("/memo/getMemo/" + user.data.id)
+					.then((listeMemo) => {
+						const memoFiltres = listeMemo.data.filter((memo) => memo.user == user.data.id);
+						setTaskList(memoFiltres);
+						setTaskListTotale(memoFiltres);
+					})
+					.catch((err) => console.log("bye", err));
+			})
+			.catch((err) => console.log("bye", err));
 	}, []);
+
 	useEffect(() => {
 		window.addEventListener("scroll", handleScroll);
 		return () => {
@@ -34,37 +73,44 @@ const TodoList = () => {
 		};
 	}, []);
 
+	function openModal() {
+		toggleNav();
+		setIsOpen(true);
+	}
+
+	function closeModal() {
+		setIsOpen(false);
+	}
+	const toggleNav = () => {
+		console.log(toggleMenu);
+		setToggleMenu(!toggleMenu);
+	};
 	const handleScroll = (e) => {
-		// console.log(e.srcElement.scrollingElement.scrollTop)
 		const scrollValue = e.srcElement.scrollingElement.scrollTop;
 
 		if (scrollValue > 1) {
-			// console.log("dmkf,sdmsmkms");
 			SetHeaderH1Class("animatedHeader");
 			SetHeaderClass("header2");
 		}
 	};
 	const deleteTask = (indexFromSQL_Base) => {
-		// let tempList = taskList;
-		// tempList.splice(index, 1);
-		// localStorage.setItem("taskList", JSON.stringify(tempList));
-		// setTaskList(tempList);
-		axios.post("https://lomano.go.yo.fr/api/aideMemoire/delete.php", indexFromSQL_Base).then((e) => window.location.reload());
-
-		//
+		axios.delete("memo/deleteMemo/" + indexFromSQL_Base).then((e) => window.location.reload());
 	};
 
+	const post = (_data) => {
+		axios.post("memo/postMemo", _data).then((e) => window.location.reload());
+	};
+	const update = (_data) => {
+		axios.patch("memo/updateMemo/" + _data.id, _data).then((e) => {
+			window.location.reload();
+		});
+	};
 	const handleUpdate = (objToUpdate, id) => {
-		// let tempList = taskList;
-		// tempList[index] = obj;
-		// localStorage.setItem("taskList", JSON.stringify(tempList));
-		// setTaskList(tempList);
+		console.log("updddaate");
 		let objectToUpdate = objToUpdate;
 		objectToUpdate.id = id;
 		console.log(objectToUpdate);
 		update(objectToUpdate);
-		// updateListArray(objToUpdate)
-		// window.location.reload();
 	};
 
 	const toggle = () => {
@@ -72,34 +118,10 @@ const TodoList = () => {
 	};
 
 	const saveTask = (taskObj) => {
-		// let tempList = taskList;
-		// tempList.push(taskObj);
-		console.log("taskObj");
-		console.log(taskObj);
 		post(taskObj);
-		// localStorage.setItem("taskList", JSON.stringify(tempList));
-		// setTaskList(taskList);
 		setModal(false);
 	};
 
-	const get = () => {
-		axios.post("https://lomano.go.yo.fr/api/aideMemoire/get.php", "").then((e) => window.location.reload());
-	};
-	const mockedData = {
-		description: "<p>tatata <strong>merde</strong></p",
-		nom: "jouet",
-		categorie: "test@trescal.com",
-	};
-
-	const post = (_data) => {
-		axios.post("https://lomano.go.yo.fr/api/aideMemoire/post.php", _data).then((e) => window.location.reload());
-	};
-	const update = (_data) => {
-		axios.post("https://lomano.go.yo.fr/api/aideMemoire/update.php", _data).then((e) => window.location.reload());
-	};
-	const handleCheckbox = (event) => {
-		setIFrameWindow(event.target.checked);
-	};
 	const filtreCategorie = (index) => {
 		if (isfiltreCategorie) {
 			setTaskList(taskListTotale);
@@ -109,46 +131,49 @@ const TodoList = () => {
 		}
 		setFiltreCategorie(!isfiltreCategorie);
 	};
+	const seConnecter = (user) => {
+		setUserConnected(true);
+		window.location.reload();
+	};
+	const seDeconnecter = () => {
+		window.localStorage.removeItem("token");
+		toggleNav();
+		setUserConnected(null);
+		window.location.reload(false);
+	};
 
 	return (
 		<>
 			<div className={headerClass}>
 				<div className="button-container">
-					{/* <div style={{ alignSelf: "flex-end" }}>
-						<input type="checkbox" onChange={handleCheckbox} checked={iFrameWindow} />
-						<label>Afficher Iframe</label>
-					</div> */}
-					{/* <img 
-     src={img}
-     alt="Grapefruit slice atop a pile of other slices"/> */}
 					<h1 className={headerH1Class}>Aide-mémoire Formation</h1>
-					{/* <button className="btn" onClick={get}>
-						click to get !
-					</button> */}
-					{/* <button className="btn" onClick={post}>
-						click to post !
-					</button> */}
-					{/* <i color="#12345" className="far button fa-plus-circle" onClick={() => setModal(true)}></i> */}
-					
-					<div className="tooltip1">
-					<i class="fa fa-plus-circle fa-4x   button" aria-hidden="true" onClick={() => setModal(true)}></i>
-						<span className="tooltiptext1">Ajouter un Mémo</span>
-					</div>
-					
+					{userConnected ? (
+						<div onClick={seDeconnecter}>
+							<LogoutIcon sx={{ fontSize: 25, paddingTop: 0 }} />
+						</div>
+					) : (
+						<div onClick={openModal}>
+							<AccountCircleIcon data-tip data-for="AccountCircleIcon" sx={{ fontSize: 25, paddingTop: 0 }} />
+						</div>
+					)}
+					{userConnected && (
+						<div className="tooltip1">
+							<i class="fa fa-plus-circle fa-4x   button" aria-hidden="true" onClick={() => setModal(true)}></i>
+							<span className="tooltiptext1">Ajouter un Mémo</span>
+						</div>
+					)}
 				</div>
 			</div>
 			<div className="task-container">
 				{taskList &&
-					taskList.map((obj, index) => (
-						<Card key={Math.random()} taskObj={obj} index={index} deleteTask={deleteTask} updateListArray={handleUpdate} filtreCategorie={filtreCategorie} />
-					))}
+					taskList.map((obj, index) => {
+						return <Card key={index} taskObj={obj} index={index} deleteTask={deleteTask} updateListArray={handleUpdate} filtreCategorie={filtreCategorie} />;
+					})}
 			</div>
-			<CreateTask toggle={toggle} modal={modal} save={saveTask} />
-			{/* <div class="tooltip1">
-						Hover over me
-						<span class="tooltiptext1">Tooltip text</span>
-					</div> */}
-			{iFrameWindow && <Iframe url="/iframe1.html" width="450px" height="450px" id="myId" display="initial" position="relative" />}
+			<CreationMemo toggle={toggle} modal={modal} save={saveTask} />
+			<Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles} contentLabel="Example Modal">
+				<LoginForm closeModal={closeModal} seConnecter={seConnecter} />
+			</Modal>
 		</>
 	);
 };

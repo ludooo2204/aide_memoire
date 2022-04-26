@@ -9,29 +9,11 @@ exports.signup = (req, res) => {
   console.log("test signup")
   // Save User to Database
   User.create({
-    username: req.body.username,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8)
   })
     .then(user => {
-      if (req.body.roles) {
-        Role.findAll({
-          where: {
-            name: {
-              [Op.or]: req.body.roles
-            }
-          }
-        }).then(roles => {
-          user.setRoles(roles).then(() => {
-            res.send({ message: "Le compte a bien été enregistré !" });
-          });
-        });
-      } else {
-        // user role = 1
-        user.setRoles([1]).then(() => {
-          res.send({ message: "Le compte a bien été enregistré !" });
-        });
-      }
+  console.log("user créer")
     })
     .catch(err => {
       res.status(500).send({ message: err.message });
@@ -39,10 +21,10 @@ exports.signup = (req, res) => {
 };
 exports.signin = (req, res) => {
   console.log("test signin")
-
+console.log(req.body)
   User.findOne({
     where: {
-      username: req.body.username
+      email: req.body.email
     }
   })
     .then(user => {
@@ -62,27 +44,27 @@ exports.signin = (req, res) => {
           message: "Mot de passe erroné!"
         });
       }
-      var token = jwt.sign({ id: user.id,username:user.username }, config.secret, {
-        expiresIn: 86400 // 24 hours
+      console.log("passwordIsValid")
+      console.log(passwordIsValid)
+      var token = jwt.sign({ id: user.id,email:user.email }, config.secret, {
+        expiresIn: 86400000
       });
-      var authorities = [];
+      // var authorities = [];
       // console.log("user")
       // console.log(user)
       // res.setHeader('x-access-token', 'Bearer '+ token);
       // res.setHeader('x-access-token', token);
-      user.getRoles().then(roles => {
-        for (let i = 0; i < roles.length; i++) {
-          authorities.push("ROLE_" + roles[i].name.toUpperCase());
-        }
+      // user.getRoles().then(roles => {
+        // for (let i = 0; i < roles.length; i++) {
+        //   authorities.push("ROLE_" + roles[i].name.toUpperCase());
+        // }
 
         res.status(200).send({
           id: user.id,
-          username: user.username,
           email: user.email,
-          roles: authorities,
           accessToken: token
         });
-      });
+      // });
     })
     .catch(err => {
       res.status(500).send({ message: err.message });
